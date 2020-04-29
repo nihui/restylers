@@ -16,7 +16,7 @@ fi
 # Remaining output is all error output
 exec 1>&2
 
-printf '\e[31m!!\e[0m Lint errors found in \e[34m%s\e[0m:\n' "$dockerfile"
+printf "\e[31m!!\e[0m Lint errors found in \e[34m%s\e[0m:\n" "$dockerfile"
 echo
 
 sed 's|^.* \([SD][CL][0-9]\+\) \(.*\)$|\1\|\2|' "$tmp" |
@@ -33,8 +33,8 @@ sed 's|^.* \([SD][CL][0-9]\+\) \(.*\)$|\1\|\2|' "$tmp" |
         ;;
     esac
 
-    printf '  - %s\e[36m%s\e[0m:\n' "$wiki_root" "$code"
-    printf '    \e[1;30m%s\e[0m\n' "$message"
+    printf "  - %s\e[36m%s\e[0m:\n" "$wiki_root" "$code"
+    printf "    \e[1;30m%s\e[0m\n" "$message"
   done
 
 echo
