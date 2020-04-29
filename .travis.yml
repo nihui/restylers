@@ -50,7 +50,12 @@ script: |
   parent=$(./build/restyler-meta overrides "$RESTYLER")
 
   if [ -n "$parent" ]; then
-    make "$parent"/Dockerfile.built "$RESTYLER".tested
+    make \
+      "$parent"/Dockerfile.built \
+      "$parent"/Dockerfile.linted \
+      "$RESTYLER".tested
   else
-    make "$RESTYLER"/Dockerfile.tested
+    make \
+      "$parent"/Dockerfile.tested \
+      "$parent"/Dockerfile.linted
   fi
