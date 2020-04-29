@@ -1,0 +1,42 @@
+#!/bin/sh
+if [ -z "$1" ]; then
+  echo "Usage: build/hadolint-pretty <Dockerfile>" >&2
+  exit 64
+fi
+
+tmp=$(mktemp)
+trap 'rm "$tmp"' EXIT
+
+dockerfile=$1
+
+if docker run --rm --interactive hadolint/hadolint <"$dockerfile" >"$tmp"; then
+  exit 0
+fi
+
+# Remaining output is all error output
+exec 1>&2
+
+printf '\e[31m!!\e[0m Lint errors found in \e[34m%s\e[0m:\n' "$dockerfile"
+echo
+
+sed 's|^.* \([SD][CL][0-9]\+\) \(.*\)$|\1\|\2|' "$tmp" |
+  while IFS='|' read -r code message; do
+    case "$code" in
+      DL*)
+        wiki_root=https://github.com/hadolint/hadolint/wiki/
+        ;;
+      SC*)
+        wiki_root=https://github.com/koalaman/shellcheck/wiki/
+        ;;
+      *)
+        wiki_root=''
+        ;;
+    esac
+
+    printf '  - %s\e[36m%s\e[0m:\n' "$wiki_root" "$code"
+    printf '    \e[1;30m%s\e[0m\n' "$message"
+  done
+
+echo
+
+exit 1

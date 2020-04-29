@@ -20,7 +20,7 @@ restylers.yaml: */info.yaml
 	echo > $@
 
 %/Dockerfile.linted: %/Dockerfile
-	docker run --rm --interactive hadolint/hadolint < "$*"/Dockerfile
+	@build/hadolint-pretty "$*/Dockerfile"
 	echo > $@
 
 %/Dockerfile.built: %/Dockerfile %/info.yaml
