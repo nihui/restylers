@@ -51,11 +51,11 @@ script: |
 
   if [ -n "$parent" ]; then
     make \
-      "$parent"/Dockerfile.built \
       "$parent"/Dockerfile.linted \
+      "$parent"/Dockerfile.built \
       "$RESTYLER".tested
   else
     make \
-      "$RESTYLER"/Dockerfile.tested \
-      "$RESTYLER"/Dockerfile.linted
+      "$RESTYLER"/Dockerfile.linted \
+      "$RESTYLER"/Dockerfile.tested
   fi
