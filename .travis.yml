@@ -37,5 +37,7 @@ matrix:
     - env: RESTYLER=terraform
     - env: RESTYLER=whitespace
     - env: RESTYLER=yapf
-install: gem install rspec
+install:
+  - gem install rspec
+  - docker pull hadolint/hadolint
 script: ./build/ci
