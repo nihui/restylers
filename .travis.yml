@@ -56,6 +56,6 @@ script: |
       "$RESTYLER".tested
   else
     make \
-      "$parent"/Dockerfile.tested \
-      "$parent"/Dockerfile.linted
+      "$RESTYLER"/Dockerfile.tested \
+      "$RESTYLER"/Dockerfile.linted
   fi
